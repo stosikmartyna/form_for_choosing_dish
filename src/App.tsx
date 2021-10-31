@@ -1,7 +1,11 @@
 import React from 'react';
+import { Form } from './components/Form/Form';
+import { AppContainer } from './App.styles';
 
 export const App: React.FC = () => {
   return (
-    <h1>Hello!</h1>
+    <AppContainer>
+      <Form />
+    </AppContainer>
   );
 }
