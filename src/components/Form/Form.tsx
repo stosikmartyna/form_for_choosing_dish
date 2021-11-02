@@ -79,14 +79,21 @@ export const Form: React.FC = () => {
             />
             <Select
                 id={'type'}
-                placeholder={'Dish type'}
                 value={inputsValues.type}
                 onChange={handleInputChange}
                 onBlur={validateInput}
                 isCorrect={isValidated.type}
             >
                 {types.map(type => {
-                    return <StyledOption value={type.value} key={type.value}>{type.label}</StyledOption>
+                    return (
+                        <StyledOption 
+                            disabled={type.label === 'Dish type'} 
+                            value={type.value} 
+                            key={type.value}
+                        >
+                            {type.label}
+                        </StyledOption>
+                    )
                 })}
             </Select>
 
@@ -95,7 +102,10 @@ export const Form: React.FC = () => {
             )}
 
             {inputsValues.type === DISH_TYPE.SOUP && (
-                <SoupDetails inputsValues={inputsValues} onInputChange={handleInputChange} />
+                <SoupDetails 
+                    inputsValues={inputsValues} 
+                    onInputChange={handleInputChange}
+                />
             )}
 
             {inputsValues.type === DISH_TYPE.SANDWICH && (

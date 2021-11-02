@@ -45,6 +45,7 @@ export enum DISH_TYPE {
 }
 
 export const types = [
+    { value: '', label: 'Dish type' },
     { value: 'pizza', label: 'Pizza' },
     { value: 'soup', label: 'Soup' },
     { value: 'sandwich', label: 'Sandwich' }
