@@ -1,14 +1,28 @@
 import React, { useState } from 'react';
-import { DISH_TYPE, initialValue, InputValues, spicinessScale, types } from './Form.types';
+import { PizzaDetails } from '../PizzaDetails/PizzaDetails';
+import { SoupDetails } from '../SoupDetails/SoupDetails';
+import { SandwichDetails } from '../SandwichDetails/SandwichDetails';
+import { 
+    initialValue,
+    validatedValues,
+    InputValues, 
+    IsUserValidated, 
+    DISH_TYPE, 
+    types, 
+} from './Form.types';
+
 import {
     FormContainer,
     Input,
-    StyledSelect,
-    StyledOption
+    Select,
+    StyledOption,
+    Button
 } from './Form.styles';
 
 export const Form: React.FC = () => {
     const [inputsValues, setInputsValues] = useState<InputValues>(initialValue);
+    const [isValidated, setIsValidated] = useState<IsUserValidated>(validatedValues);
+    const [userData, setUserData] = useState<InputValues[]>([]);
 
     const handleInputChange = (event: any) => {
         setInputsValues({
@@ -17,6 +31,25 @@ export const Form: React.FC = () => {
         });
     };
 
+    const validateInput = (event: any) => {
+        const isValueEmpty = event.target.value.trim() === '';
+        setIsValidated({...isValidated, [event.target.id]: !isValueEmpty})
+      }
+    
+      const isFormValid =
+        inputsValues.name.trim() !== ''
+        && inputsValues.preparationTime.trim() !== ''
+        && inputsValues.type !== '';
+    
+      const handleSubmit = () => {
+        const submitValidatedForm = () => {
+          setUserData([...userData, inputsValues]);
+        }
+        isFormValid && submitValidatedForm();
+        setInputsValues(initialValue);
+        setIsValidated(validatedValues);
+      }
+
     return (
         <FormContainer>
             <Input 
@@ -24,66 +57,47 @@ export const Form: React.FC = () => {
                 placeholder={'Name'}
                 value={inputsValues.name}
                 onChange={handleInputChange}
+                onBlur={validateInput}
+                isCorrect={isValidated.name}
              />
             <Input
                 id={'preparationTime'}
                 placeholder={'Preparation time 00:00:00'} 
                 value={inputsValues.preparationTime}
                 onChange={handleInputChange}
+                onBlur={validateInput}
+                isCorrect={isValidated.preparationTime}
                 type={'number'}
+                min={'0'}
             />
-            <StyledSelect
+            <Select
                 id={'type'}
                 placeholder={'Dish type'}
                 value={inputsValues.type}
                 onChange={handleInputChange}
+                onBlur={validateInput}
+                isCorrect={isValidated.type}
             >
                 {types.map(type => {
                     return <StyledOption value={type.value} key={type.value}>{type.label}</StyledOption>
                 })}
-            </StyledSelect>
+            </Select>
 
             {inputsValues.type === DISH_TYPE.PIZZA && (
-                <>
-                    <Input 
-                        id={'noOfSlices'}
-                        placeholder={'No of slices'} 
-                        value={inputsValues.noOfSlices}
-                        onChange={handleInputChange}
-                        type={'number'}
-                    />
-                    <Input 
-                        id={'diameter'}
-                        placeholder={'Diameter'} 
-                        value={inputsValues.diameter}
-                        onChange={handleInputChange}
-                        type={'number'}
-                    />
-                </>
+                <PizzaDetails inputsValues={inputsValues} onInputChange={handleInputChange} />
             )}
 
             {inputsValues.type === DISH_TYPE.SOUP && (
-                <StyledSelect
-                    id={'spicinessScale'}
-                    placeholder={'Spiciness scale'}
-                    value={inputsValues.spicinessScale}
-                    onChange={handleInputChange}
-                >
-                    {spicinessScale.map(spiciness => {
-                        return <StyledOption value={spiciness.value} key={spiciness.value}>{spiciness.label}</StyledOption>
-                    })}
-                </StyledSelect>
+                <SoupDetails inputsValues={inputsValues} onInputChange={handleInputChange} />
             )}
 
             {inputsValues.type === DISH_TYPE.SANDWICH && (
-                <Input 
-                    id={'slicesOfBread'}
-                    placeholder={'Slices of bread'} 
-                    value={inputsValues.slicesOfBread}
-                    onChange={handleInputChange}
-                    type={'number'}
-                />
+                <SandwichDetails inputsValues={inputsValues} onInputChange={handleInputChange} />
             )}
+
+            <Button onClick={handleSubmit} disabled={!isFormValid}>
+                Submit
+            </Button>
         </FormContainer>
     );
 };

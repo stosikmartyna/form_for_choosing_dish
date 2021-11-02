@@ -8,9 +8,19 @@ export const FormContainer = styled.div`
     width: 50%;
 `;
 
-export const Input = styled.input`
+interface InputProps {
+    isCorrect?: boolean;
+}
+
+export const Input = styled.input<InputProps>`
     background-color: transparent;
-    border: 1px solid ${colors.inputGrey};
+    border: ${({isCorrect}) => {
+        return isCorrect === undefined 
+            ? `1px solid ${colors.inputGrey}` 
+            : isCorrect 
+                ? `1px solid ${colors.green}`
+                : `1px solid ${colors.red}`
+    }};
     box-sizing: border-box;
     color: ${colors.white};
     font-size: 14px;
@@ -19,13 +29,33 @@ export const Input = styled.input`
     outline: none;
     padding: 17px 0 17px 18px;
 
+    &:hover {
+        border: ${({isCorrect}) => {
+            return isCorrect === undefined 
+                ? `1px solid ${colors.inputGreyHover}` 
+                : isCorrect 
+                    ? `1px solid ${colors.greenHover}`
+                    : `1px solid ${colors.redHover}`
+        }};
+    }
+
     &:focus {
         border: 1px solid ${colors.white};
     }
 `
 
-export const StyledSelect = styled.select`
-    border: 1px solid ${colors.inputGrey};
+interface SelectProps {
+    isCorrect?: boolean;
+}
+
+export const Select = styled.select<SelectProps>`
+    border: ${({isCorrect}) => {
+        return isCorrect === undefined 
+            ? `1px solid ${colors.inputGrey}` 
+            : isCorrect 
+                ? `1px solid ${colors.green}`
+                : `1px solid ${colors.red}`
+    }};
     background-color: transparent;
     color: ${colors.white};
     cursor: pointer;
@@ -36,7 +66,13 @@ export const StyledSelect = styled.select`
     padding: 17px 18px;
 
     &:hover {
-        border: 1px solid ${colors.inputGreyHover};
+        border: ${({isCorrect}) => {
+        return isCorrect === undefined 
+            ? `1px solid ${colors.inputGreyHover}` 
+            : isCorrect 
+                ? `1px solid ${colors.greenHover}`
+                : `1px solid ${colors.redHover}`
+        }};
     }
 `;
 
@@ -46,4 +82,22 @@ export const StyledOption = styled.option`
     letter-spacing: 0.04em;
     padding: 0;
     padding-bottom: 3px;
+`;
+
+export const Button = styled.button`
+    align-items: center;
+    background-color: ${colors.black};
+    background-color: ${({disabled}) => disabled ? colors.inputGrey : colors.black};
+    border: none;
+    color: ${colors.white};
+    cursor: pointer;
+    display: flex;
+    font-weight: 600;
+    font-size: 14px;
+    justify-content: space-between;
+    line-height: 24px;
+    margin: 48px 0 72px auto;
+    padding: 12px 22px 12px 18px;
+    text-align: left;
+    width: 200px;
 `;
