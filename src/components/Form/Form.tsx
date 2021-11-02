@@ -12,7 +12,8 @@ import {
     types,
 } from '../../utils/types';
 import {
-    FormContainer,
+    Container,
+    InputsWrapper,
     Input,
     Select,
     StyledOption,
@@ -59,62 +60,64 @@ export const Form: React.FC = () => {
     };
 
     return (
-        <FormContainer>
-            <Input 
-                id={'name'}
-                placeholder={'Name'}
-                value={inputsValues.name}
-                onChange={handleInputChange}
-                onBlur={validateInput}
-                isCorrect={isValidated.name}
-             />
-            <Input
-                id={'preparationTime'}
-                placeholder={'Preparation time 00:00:00'} 
-                value={inputsValues.preparationTime}
-                onChange={handleInputChange}
-                onBlur={validateInput}
-                isCorrect={isValidated.preparationTime}
-                min={'0'}
-            />
-            <Select
-                id={'type'}
-                value={inputsValues.type}
-                onChange={handleInputChange}
-                onBlur={validateInput}
-                isCorrect={isValidated.type}
-            >
-                {types.map(type => {
-                    return (
-                        <StyledOption 
-                            disabled={type.label === 'Dish type'} 
-                            value={type.value} 
-                            key={type.value}
-                        >
-                            {type.label}
-                        </StyledOption>
-                    )
-                })}
-            </Select>
-
-            {inputsValues.type === DISH_TYPE.PIZZA && (
-                <PizzaDetails inputsValues={inputsValues} onInputChange={handleInputChange} />
-            )}
-
-            {inputsValues.type === DISH_TYPE.SOUP && (
-                <SoupDetails 
-                    inputsValues={inputsValues} 
-                    onInputChange={handleInputChange}
+        <Container backgroundType={inputsValues.type}>
+            <InputsWrapper>
+                <Input 
+                    id={'name'}
+                    placeholder={'Name'}
+                    value={inputsValues.name}
+                    onChange={handleInputChange}
+                    onBlur={validateInput}
+                    isCorrect={isValidated.name}
                 />
-            )}
+                <Input
+                    id={'preparationTime'}
+                    placeholder={'Preparation time 00:00:00'} 
+                    value={inputsValues.preparationTime}
+                    onChange={handleInputChange}
+                    onBlur={validateInput}
+                    isCorrect={isValidated.preparationTime}
+                    min={'0'}
+                />
+                <Select
+                    id={'type'}
+                    value={inputsValues.type}
+                    onChange={handleInputChange}
+                    onBlur={validateInput}
+                    isCorrect={isValidated.type}
+                >
+                    {types.map(type => {
+                        return (
+                            <StyledOption 
+                                disabled={type.label === 'Dish type'} 
+                                value={type.value} 
+                                key={type.value}
+                            >
+                                {type.label}
+                            </StyledOption>
+                        )
+                    })}
+                </Select>
 
-            {inputsValues.type === DISH_TYPE.SANDWICH && (
-                <SandwichDetails inputsValues={inputsValues} onInputChange={handleInputChange} />
-            )}
+                {inputsValues.type === DISH_TYPE.PIZZA && (
+                    <PizzaDetails inputsValues={inputsValues} onInputChange={handleInputChange} />
+                )}
 
-            <Button onClick={handleSubmit} disabled={!isFormValid}>
-                Submit
-            </Button>
-        </FormContainer>
+                {inputsValues.type === DISH_TYPE.SOUP && (
+                    <SoupDetails 
+                        inputsValues={inputsValues} 
+                        onInputChange={handleInputChange}
+                    />
+                )}
+
+                {inputsValues.type === DISH_TYPE.SANDWICH && (
+                    <SandwichDetails inputsValues={inputsValues} onInputChange={handleInputChange} />
+                )}
+
+                <Button onClick={handleSubmit} disabled={!isFormValid}>
+                    Submit
+                </Button>
+            </InputsWrapper>
+        </Container>
     );
 };

@@ -1,22 +1,49 @@
 import styled from 'styled-components';
 import { colors } from '../../utils/constants/colors';
+import { DISH_TYPE } from '../../utils/types';
 
-export const FormContainer = styled.div`
+interface ContainerProps {
+    backgroundType: string;
+}
+
+export const Container = styled.div<ContainerProps>`
+    align-items: end;
+    background-image: url('./img/mainBackground.jpg');
+    background-image: ${({backgroundType}) => {
+        return backgroundType === undefined
+            ?  `url('./img/mainBackground.jpg')`
+            : backgroundType === DISH_TYPE.PIZZA
+                ? `url('./img/pizza.jpg')`
+                : backgroundType === DISH_TYPE.SANDWICH
+                    ? `url('./img/sandwich.jpg')`
+                    : backgroundType === DISH_TYPE.SOUP
+                        && `url('./img/soup.jpg')`
+    }};
+    background-repeat: no-repeat;
+    background-size: cover;
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
-    width: 50%;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100vw;
 `;
+
+export const InputsWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-right: 100px;
+`;
+
 
 interface InputProps {
     isCorrect?: boolean;
 }
 
 export const Input = styled.input<InputProps>`
-    background-color: transparent;
+    background-color: ${colors.backgroundGrey};
     border: ${({isCorrect}) => {
         return isCorrect === undefined 
-            ? `1px solid ${colors.inputGrey}` 
+            ? `1px solid ${colors.backgroundGrey}` 
             : isCorrect 
                 ? `1px solid ${colors.green}`
                 : `1px solid ${colors.red}`
@@ -28,6 +55,8 @@ export const Input = styled.input<InputProps>`
     margin-bottom: 15px;
     outline: none;
     padding: 17px 0 17px 18px;
+    transition: border .5s ease-in-out;
+    width: 400px;
 
     &:hover {
         border: ${({isCorrect}) => {
@@ -49,21 +78,22 @@ interface SelectProps {
 }
 
 export const Select = styled.select<SelectProps>`
+    background-color: ${colors.backgroundGrey};
     border: ${({isCorrect}) => {
         return isCorrect === undefined 
-            ? `1px solid ${colors.inputGrey}` 
+            ? `1px solid ${colors.backgroundGrey}` 
             : isCorrect 
                 ? `1px solid ${colors.green}`
                 : `1px solid ${colors.red}`
     }};
-    background-color: transparent;
     color: ${colors.white};
     cursor: pointer;
-    border-radius: 0;
     font-size: 14px;
     letter-spacing: 0.04em;
     margin-bottom: 15px;
     padding: 17px 18px;
+    transition: border .5s ease-in-out;
+    width: 400px;
 
     &:hover {
         border: ${({isCorrect}) => {
@@ -94,10 +124,7 @@ export const Button = styled.button`
     display: flex;
     font-weight: 600;
     font-size: 14px;
-    justify-content: space-between;
-    line-height: 24px;
-    margin: 48px 0 72px auto;
     padding: 12px 22px 12px 18px;
     text-align: left;
-    width: 200px;
+    width: 400px;
 `;
