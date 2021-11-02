@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { colors } from '../../constants/colors';
-import Select from 'react-select';
 
 export const FormContainer = styled.div`
     display: flex;
@@ -33,6 +32,7 @@ export const StyledSelect = styled.select`
     border-radius: 0;
     font-size: 14px;
     letter-spacing: 0.04em;
+    margin-bottom: 15px;
     padding: 17px 18px;
 
     &:hover {
