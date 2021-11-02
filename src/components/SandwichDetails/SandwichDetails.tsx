@@ -1,6 +1,6 @@
 import React from 'react';
+import { InputValues } from '../../utils/types';
 import { Input } from '../Form/Form.styles';
-import { InputValues } from '../Form/Form.types';
 
 interface SandwichDetailsProps {
     inputsValues: InputValues;

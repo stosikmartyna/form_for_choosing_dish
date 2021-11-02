@@ -1,6 +1,7 @@
 import React from 'react';
+import { InputValues } from '../../utils/types';
+import { spicinessScale } from './SoupDetails.types';
 import { Select, StyledOption } from '../Form/Form.styles';
-import { InputValues, spicinessScale } from '../Form/Form.types';
 
 interface SoupDetailsProps {
     inputsValues: InputValues;

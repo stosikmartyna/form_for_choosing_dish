@@ -4,14 +4,13 @@ import { PizzaDetails } from '../PizzaDetails/PizzaDetails';
 import { SoupDetails } from '../SoupDetails/SoupDetails';
 import { SandwichDetails } from '../SandwichDetails/SandwichDetails';
 import { 
-    initialValue,
-    validatedValues,
+    initialValue, 
     InputValues, 
     IsUserValidated, 
-    DISH_TYPE, 
-    types, 
-} from './Form.types';
-
+    validatedValues,
+    DISH_TYPE,
+    types,
+} from '../../utils/types';
 import {
     FormContainer,
     Input,
@@ -23,7 +22,6 @@ import {
 export const Form: React.FC = () => {
     const [inputsValues, setInputsValues] = useState<InputValues>(initialValue);
     const [isValidated, setIsValidated] = useState<IsUserValidated>(validatedValues);
-    const [userData, setUserData] = useState<InputValues[]>([]);
 
     const postForm = async() => {
         try {
@@ -52,7 +50,6 @@ export const Form: React.FC = () => {
     
       const handleSubmit = () => {
         const submitValidatedForm = () => {
-          setUserData([...userData, inputsValues]);
           postForm();
         }
 
@@ -78,7 +75,6 @@ export const Form: React.FC = () => {
                 onChange={handleInputChange}
                 onBlur={validateInput}
                 isCorrect={isValidated.preparationTime}
-                type={'number'}
                 min={'0'}
             />
             <Select
