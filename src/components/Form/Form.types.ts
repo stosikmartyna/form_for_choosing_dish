@@ -39,15 +39,15 @@ export const validatedValues = {
   }
 
 export enum DISH_TYPE {
-    PIZZA = 'Pizza',
-    SOUP = 'Soup',
-    SANDWICH = 'Sandwich',
+    PIZZA = 'pizza',
+    SOUP = 'soup',
+    SANDWICH = 'sandwich',
 }
 
 export const types = [
-    { value: 'Pizza', label: 'Pizza' },
-    { value: 'Soup', label: 'Soup' },
-    { value: 'Sandwich', label: 'Sandwich' }
+    { value: 'pizza', label: 'Pizza' },
+    { value: 'soup', label: 'Soup' },
+    { value: 'sandwich', label: 'Sandwich' }
 ];
 
 export const spicinessScale = [

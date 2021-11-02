@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { PizzaDetails } from '../PizzaDetails/PizzaDetails';
 import { SoupDetails } from '../SoupDetails/SoupDetails';
 import { SandwichDetails } from '../SandwichDetails/SandwichDetails';
@@ -24,6 +25,14 @@ export const Form: React.FC = () => {
     const [isValidated, setIsValidated] = useState<IsUserValidated>(validatedValues);
     const [userData, setUserData] = useState<InputValues[]>([]);
 
+    const postForm = async() => {
+        try {
+            await axios.post('https://frosty-wood-6558.getsandbox.com:443/dishes', inputsValues);
+        } catch (error) {
+            console.warn(error);
+        }
+    }
+
     const handleInputChange = (event: any) => {
         setInputsValues({
             ...inputsValues,
@@ -35,7 +44,7 @@ export const Form: React.FC = () => {
         const isValueEmpty = event.target.value.trim() === '';
         setIsValidated({...isValidated, [event.target.id]: !isValueEmpty})
       }
-    
+
       const isFormValid =
         inputsValues.name.trim() !== ''
         && inputsValues.preparationTime.trim() !== ''
@@ -44,11 +53,13 @@ export const Form: React.FC = () => {
       const handleSubmit = () => {
         const submitValidatedForm = () => {
           setUserData([...userData, inputsValues]);
+          postForm();
         }
+
         isFormValid && submitValidatedForm();
         setInputsValues(initialValue);
         setIsValidated(validatedValues);
-      }
+    };
 
     return (
         <FormContainer>
