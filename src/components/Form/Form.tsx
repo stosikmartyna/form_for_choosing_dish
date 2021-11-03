@@ -14,10 +14,13 @@ import {
 import {
     Container,
     InputsWrapper,
+    Header,
+    Label,
     Input,
     TimeInput,
     Select,
     StyledOption,
+    ButtonsWrapper,
     SubmitButton,
     ClearButton
 } from './Form.styles';
@@ -70,9 +73,9 @@ export const Form: React.FC = () => {
     const validateInput = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
         const isValueEmpty = event.target.value.trim() === '';
         setIsValidated({...isValidated, [event.target.id]: !isValueEmpty})
-      }
+    };
 
-      const isFormValid =
+    const isFormValid =
         !!inputsValues.name.trim()
         && !!inputsValues.preparationTime
         && !!inputsValues.type 
@@ -81,12 +84,12 @@ export const Form: React.FC = () => {
             || (inputsValues.type === DISH_TYPE.SOUP
                 && !!inputsValues.spicinessScale) 
                 || (inputsValues.type === DISH_TYPE.SANDWICH
-                    && !!inputsValues.slicesOfBread))
+                    && !!inputsValues.slicesOfBread));
     
-      const handleSubmit = () => {
+    const handleSubmit = () => {
         const submitValidatedForm = () => {
           postForm();
-        }
+        };
 
         isFormValid && submitValidatedForm();
         setInputsValues(initialValue);
@@ -101,23 +104,26 @@ export const Form: React.FC = () => {
     return (
         <Container backgroundType={inputsValues.type}>
             <InputsWrapper>
+                <Header>Order your dish</Header>
+                <Label isCorrect={isValidated.name}>Name</Label>
                 <Input 
                     id={'name'}
-                    placeholder={'Name'}
                     value={inputsValues.name}
                     onChange={handleInputChange}
                     onBlur={validateInput}
                     isCorrect={isValidated.name}
                 />
+                <Label isCorrect={isValidated.preparationTime}>Preparation time</Label>
                 <TimeInput
+                    type={'time'}
+                    step={2}
                     id={'preparationTime'}
                     value={inputsValues.preparationTime}
                     onChange={handleInputChange}
                     onBlur={validateInput}
                     isCorrect={isValidated.preparationTime}
-                    type={'time'}
-                    step={2}
                 />
+                <Label isCorrect={isValidated.type}>Dish type</Label>
                 <Select
                     id={'type'}
                     value={inputsValues.type}
@@ -137,7 +143,6 @@ export const Form: React.FC = () => {
                         )
                     })}
                 </Select>
-
                 {inputsValues.type === DISH_TYPE.PIZZA && (
                     <PizzaDetails 
                         inputsValues={inputsValues} 
@@ -146,7 +151,6 @@ export const Form: React.FC = () => {
                         isValid={isValidated}
                     />
                 )}
-
                 {inputsValues.type === DISH_TYPE.SOUP && (
                     <SoupDetails 
                         inputsValues={inputsValues} 
@@ -155,7 +159,6 @@ export const Form: React.FC = () => {
                         isValid={isValidated}
                     />
                 )}
-
                 {inputsValues.type === DISH_TYPE.SANDWICH && (
                     <SandwichDetails 
                         inputsValues={inputsValues} 
@@ -164,11 +167,10 @@ export const Form: React.FC = () => {
                         isValid={isValidated}
                     />
                 )}
-
-                <SubmitButton onClick={handleSubmit} disabled={!isFormValid}>
-                    Submit
-                </SubmitButton>
-                <ClearButton onClick={clearForm}>Clear</ClearButton>
+                <ButtonsWrapper>
+                    <SubmitButton onClick={handleSubmit} disabled={!isFormValid}>Submit</SubmitButton>
+                    <ClearButton onClick={clearForm}>Clear</ClearButton>
+                </ButtonsWrapper>
             </InputsWrapper>
         </Container>
     );

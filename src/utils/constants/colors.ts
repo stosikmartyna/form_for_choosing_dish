@@ -1,7 +1,8 @@
 export const colors = {
     black: '#000000',
     backgroundGrey: '#222222',
-    clearButtonGrey: '#686767',
+    backgroundGreyLighter: '#494949',
+    clearButtonGrey: '#9b9999',
     green: '#34A853',
     greenHover: '#2C8E46',
     inputGrey: '#555555',

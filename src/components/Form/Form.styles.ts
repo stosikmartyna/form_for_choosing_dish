@@ -29,11 +29,50 @@ export const Container = styled.div<ContainerProps>`
 `;
 
 export const InputsWrapper = styled.div`
+    background-color: rgb(34, 34, 34, .5);
     display: flex;
     flex-direction: column;
     margin-right: 100px;
+    padding: 30px 20px 40px 20px;
 `;
 
+export const Header = styled.span`
+    color: ${colors.white};
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    margin-bottom: 15px;
+    text-align: center;
+`;
+
+interface LabelProps {
+    isCorrect?: boolean;
+}
+
+export const Label = styled.span<LabelProps>`
+    color: ${({isCorrect}) => {
+        return isCorrect === undefined 
+            ? `${colors.white}`
+            : isCorrect 
+                ? `${colors.green}`
+                : `${colors.red}`
+    }};
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    margin-bottom: 5px;
+    transition: color .5s ease-in-out;
+
+    &:hover {
+        color: ${({isCorrect}) => {
+            return isCorrect === undefined 
+                ? `${colors.white}`
+                : isCorrect 
+                    ? `${colors.green}`
+                    : `${colors.red}`
+        }};
+    }
+`;
 
 interface InputProps {
     isCorrect?: boolean;
@@ -43,7 +82,7 @@ export const Input = styled.input<InputProps>`
     background-color: ${colors.backgroundGrey};
     border: ${({isCorrect}) => {
         return isCorrect === undefined 
-            ? `1px solid ${colors.backgroundGrey}` 
+            ? `1px solid ${colors.backgroundGreyLighter}` 
             : isCorrect 
                 ? `1px solid ${colors.green}`
                 : `1px solid ${colors.red}`
@@ -53,7 +92,6 @@ export const Input = styled.input<InputProps>`
     font-size: 14px;
     letter-spacing: 0.09em;
     margin-bottom: 15px;
-    outline: none;
     padding: 17px 0 17px 18px;
     transition: border .5s ease-in-out;
     width: 400px;
@@ -68,8 +106,8 @@ export const Input = styled.input<InputProps>`
         }};
     }
 
-    &:focus {
-        border: 1px solid ${colors.white};
+    &::-webkit-inner-spin-button {
+        display: none;
     }
 `
 
@@ -96,7 +134,7 @@ export const Select = styled.select<SelectProps>`
     background-color: ${colors.backgroundGrey};
     border: ${({isCorrect}) => {
         return isCorrect === undefined 
-            ? `1px solid ${colors.backgroundGrey}` 
+            ? `1px solid ${colors.backgroundGreyLighter}` 
             : isCorrect 
                 ? `1px solid ${colors.green}`
                 : `1px solid ${colors.red}`
@@ -127,9 +165,11 @@ export const StyledOption = styled.option`
     letter-spacing: 0.04em;
 `;
 
+export const ButtonsWrapper = styled.div`
+    display: flex;
+`;
+
 export const SubmitButton = styled.button`
-    align-items: center;
-    background-color: ${colors.black};
     background-color: ${({disabled}) => disabled ? colors.inputGrey : colors.black};
     border: none;
     color: ${colors.white};
@@ -139,11 +179,12 @@ export const SubmitButton = styled.button`
     font-size: 14px;
     letter-spacing: 0.09em;
     padding: 12px 22px 12px 18px;
-    text-align: left;
-    width: 400px;
+    width: 100%;
 `;
 
 export const ClearButton = styled(SubmitButton)`
     background-color: ${colors.clearButtonGrey};
-    width: 200px;
+    justify-content: center;
+    margin-left: 10px;
+    width: 150px;
 `;
