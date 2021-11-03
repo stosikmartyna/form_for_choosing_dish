@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PizzaDetails } from '../PizzaDetails/PizzaDetails';
 import { SoupDetails } from '../SoupDetails/SoupDetails';
 import { SandwichDetails } from '../SandwichDetails/SandwichDetails';
+import { postFormValues } from '../../api/api';
 import { 
     initialValues, 
     InputsValues, 
@@ -24,8 +25,7 @@ import {
     SubmitButton,
     ClearButton
 } from './Form.styles';
-import { postFormValues } from '../../api/api';
-import { isFormValid } from './Form.helpers';
+
 
 export const Form: React.FC = () => {
     const [inputsValues, setInputsValues] = useState<InputsValues>(initialValues);
@@ -76,13 +76,25 @@ export const Form: React.FC = () => {
         const isValueEmpty = event.target.value.trim() === '';
         setIsValidated({...isValidated, [event.target.id]: !isValueEmpty})
     };
+
+
+    const isFormValid =
+        !!inputsValues.name.trim()
+        && !!inputsValues.preparationTime
+        && !!inputsValues.type 
+        && ((inputsValues.type === DISH_TYPE.PIZZA 
+            && !!inputsValues.noOfSlices && !!inputsValues.diameter) 
+            || (inputsValues.type === DISH_TYPE.SOUP
+                && !!inputsValues.spicinessScale) 
+                || (inputsValues.type === DISH_TYPE.SANDWICH
+                    && !!inputsValues.slicesOfBread));
     
     const handleSubmit = () => {
         const submitValidatedForm = () => {
           postForm();
         };
 
-        isFormValid(initialValues) && submitValidatedForm();
+        isFormValid && submitValidatedForm();
         setInputsValues(initialValues);
         setIsValidated(validatedValues);
     };
@@ -159,7 +171,7 @@ export const Form: React.FC = () => {
                     />
                 )}
                 <ButtonsWrapper>
-                    <SubmitButton onClick={handleSubmit} disabled={!isFormValid(initialValues)}>
+                    <SubmitButton onClick={handleSubmit} disabled={!isFormValid}>
                         Submit
                     </SubmitButton>
                     <ClearButton onClick={clearForm}>
