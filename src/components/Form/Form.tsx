@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import axios from 'axios';
 import { PizzaDetails } from '../PizzaDetails/PizzaDetails';
 import { SoupDetails } from '../SoupDetails/SoupDetails';
@@ -15,10 +15,12 @@ import {
     Container,
     InputsWrapper,
     Input,
+    TimeInput,
     Select,
     StyledOption,
     Button
 } from './Form.styles';
+import { format } from 'date-fns';
 
 export const Form: React.FC = () => {
     const [inputsValues, setInputsValues] = useState<InputValues>(initialValue);
@@ -30,16 +32,16 @@ export const Form: React.FC = () => {
         } catch (error) {
             console.warn(error);
         }
-    }
+    };
 
-    const handleInputChange = (event: any) => {
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
         setInputsValues({
             ...inputsValues,
             [event.target.id]: event.target.value,
         });
     };
 
-    const validateInput = (event: any) => {
+    const validateInput = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
         const isValueEmpty = event.target.value.trim() === '';
         setIsValidated({...isValidated, [event.target.id]: !isValueEmpty})
       }
@@ -59,6 +61,8 @@ export const Form: React.FC = () => {
         setIsValidated(validatedValues);
     };
 
+    console.log(inputsValues)
+
     return (
         <Container backgroundType={inputsValues.type}>
             <InputsWrapper>
@@ -70,14 +74,14 @@ export const Form: React.FC = () => {
                     onBlur={validateInput}
                     isCorrect={isValidated.name}
                 />
-                <Input
+                <TimeInput
                     id={'preparationTime'}
-                    placeholder={'Preparation time 00:00:00'} 
                     value={inputsValues.preparationTime}
                     onChange={handleInputChange}
                     onBlur={validateInput}
                     isCorrect={isValidated.preparationTime}
-                    min={'0'}
+                    type={'time'}
+                    step={2}
                 />
                 <Select
                     id={'type'}

@@ -51,7 +51,7 @@ export const Input = styled.input<InputProps>`
     box-sizing: border-box;
     color: ${colors.white};
     font-size: 14px;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.09em;
     margin-bottom: 15px;
     outline: none;
     padding: 17px 0 17px 18px;
@@ -73,6 +73,21 @@ export const Input = styled.input<InputProps>`
     }
 `
 
+export const TimeInput = styled(Input)`
+    & {
+        font-family: 'Segoe UI', 'Roboto', 'Oxygen';
+        font-weight: 500;
+    }
+
+    &::-webkit-datetime-edit-text {
+        padding: 0 3px;
+    }
+
+    &::-webkit-calendar-picker-indicator {
+        display: none;
+    }
+`;
+
 interface SelectProps {
     isCorrect?: boolean;
 }
@@ -89,7 +104,7 @@ export const Select = styled.select<SelectProps>`
     color: ${colors.white};
     cursor: pointer;
     font-size: 14px;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.09em;
     margin-bottom: 15px;
     padding: 17px 18px;
     transition: border .5s ease-in-out;
@@ -110,8 +125,6 @@ export const StyledOption = styled.option`
     background-color: ${colors.backgroundGrey};
     font-size: 14px;
     letter-spacing: 0.04em;
-    padding: 0;
-    padding-bottom: 3px;
 `;
 
 export const Button = styled.button`
@@ -124,6 +137,7 @@ export const Button = styled.button`
     display: flex;
     font-weight: 600;
     font-size: 14px;
+    letter-spacing: 0.09em;
     padding: 12px 22px 12px 18px;
     text-align: left;
     width: 400px;
