@@ -1,14 +1,14 @@
-export interface InputValues {
+export interface InputsValues {
     name: string;
     preparationTime: string;
     type: string;
-    noOfSlices: number | undefined;
-    diameter: number | undefined;
-    spicinessScale: number | undefined;
-    slicesOfBread: number | undefined;
+    noOfSlices?: number;
+    diameter?: number;
+    spicinessScale?: number;
+    slicesOfBread?: number;
 }
 
-export const initialValue = {
+export const initialValues = {
     name: '',
     preparationTime: '',
     type: '',

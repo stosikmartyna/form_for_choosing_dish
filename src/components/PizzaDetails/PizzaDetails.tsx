@@ -1,11 +1,11 @@
-import React from 'react';
-import { InputValues, FormValidation } from '../../utils/types';
+import React, { ChangeEvent } from 'react';
+import { InputsValues, FormValidation } from '../../utils/types';
 import { Input, Label } from '../Form/Form.styles';
 
 interface PizzaDetailsProps {
-    inputsValues: InputValues;
-    onInputChange: (event: any) => void;
-    validateInput: (event: any) => void;
+    inputsValues: InputsValues;
+    onInputChange: (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => void;
+    validateInput: (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => void;
     isValid: FormValidation;
 }
 

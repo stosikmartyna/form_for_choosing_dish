@@ -1,11 +1,10 @@
 import React, { ChangeEvent, useState } from 'react';
-import axios from 'axios';
 import { PizzaDetails } from '../PizzaDetails/PizzaDetails';
 import { SoupDetails } from '../SoupDetails/SoupDetails';
 import { SandwichDetails } from '../SandwichDetails/SandwichDetails';
 import { 
-    initialValue, 
-    InputValues, 
+    initialValues, 
+    InputsValues, 
     FormValidation, 
     validatedValues,
     DISH_TYPE,
@@ -24,14 +23,15 @@ import {
     SubmitButton,
     ClearButton
 } from './Form.styles';
+import { postFormValues } from '../../api/api';
 
 export const Form: React.FC = () => {
-    const [inputsValues, setInputsValues] = useState<InputValues>(initialValue);
+    const [inputsValues, setInputsValues] = useState<InputsValues>(initialValues);
     const [isValidated, setIsValidated] = useState<FormValidation>(validatedValues);
 
     const postForm = async() => {
         try {
-            await axios.post('https://frosty-wood-6558.getsandbox.com:443/dishes', inputsValues);
+            await postFormValues(inputsValues);
         } catch (error) {
             console.warn(error);
         }
@@ -92,12 +92,12 @@ export const Form: React.FC = () => {
         };
 
         isFormValid && submitValidatedForm();
-        setInputsValues(initialValue);
+        setInputsValues(initialValues);
         setIsValidated(validatedValues);
     };
 
     const clearForm = () => {
-        setInputsValues(initialValue);
+        setInputsValues(initialValues);
         setIsValidated(validatedValues);
     };
 
