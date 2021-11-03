@@ -1,11 +1,11 @@
-import React, { ChangeEvent } from 'react';
-import { InputsValues, FormValidation } from '../../utils/types';
+import React from 'react';
+import { InputEvent, InputsValues, FormValidation } from '../../utils/types';
 import { Input, Label } from '../Form/Form.styles';
 
 interface SandwichDetailsProps {
     inputsValues: InputsValues;
-    onInputChange: (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => void;
-    validateInput: (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => void;
+    onInputChange: (event: InputEvent) => void;
+    validateInput: (event: InputEvent) => void;
     isValid: FormValidation;
 }
 

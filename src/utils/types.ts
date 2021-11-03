@@ -1,3 +1,7 @@
+import { ChangeEvent } from 'react';
+
+export type InputEvent = ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+
 export interface InputsValues {
     name: string;
     preparationTime: string;

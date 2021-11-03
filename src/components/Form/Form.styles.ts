@@ -28,7 +28,7 @@ export const Container = styled.div<ContainerProps>`
     width: 100vw;
 `;
 
-export const InputsWrapper = styled.div`
+export const FieldsWrapper = styled.div`
     background-color: rgb(34, 34, 34, .5);
     display: flex;
     flex-direction: column;

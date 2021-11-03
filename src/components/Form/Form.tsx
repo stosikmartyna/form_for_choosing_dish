@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { PizzaDetails } from '../PizzaDetails/PizzaDetails';
 import { SoupDetails } from '../SoupDetails/SoupDetails';
 import { SandwichDetails } from '../SandwichDetails/SandwichDetails';
@@ -9,10 +9,11 @@ import {
     validatedValues,
     DISH_TYPE,
     dishTypes,
+    InputEvent,
 } from '../../utils/types';
 import {
     Container,
-    InputsWrapper,
+    FieldsWrapper,
     Header,
     Label,
     Input,
@@ -24,6 +25,7 @@ import {
     ClearButton
 } from './Form.styles';
 import { postFormValues } from '../../api/api';
+import { isFormValid } from './Form.helpers';
 
 export const Form: React.FC = () => {
     const [inputsValues, setInputsValues] = useState<InputsValues>(initialValues);
@@ -37,7 +39,7 @@ export const Form: React.FC = () => {
         }
     };
 
-    const handleInputChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
+    const handleInputChange = (event: InputEvent) => {
         const {value, id} = event.target;
         if (value === DISH_TYPE.PIZZA) {
             setInputsValues({
@@ -70,28 +72,17 @@ export const Form: React.FC = () => {
         }
     };
 
-    const validateInput = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
+    const validateInput = (event: InputEvent) => {
         const isValueEmpty = event.target.value.trim() === '';
         setIsValidated({...isValidated, [event.target.id]: !isValueEmpty})
     };
-
-    const isFormValid =
-        !!inputsValues.name.trim()
-        && !!inputsValues.preparationTime
-        && !!inputsValues.type 
-        && ((inputsValues.type === DISH_TYPE.PIZZA 
-            && !!inputsValues.noOfSlices && !!inputsValues.diameter) 
-            || (inputsValues.type === DISH_TYPE.SOUP
-                && !!inputsValues.spicinessScale) 
-                || (inputsValues.type === DISH_TYPE.SANDWICH
-                    && !!inputsValues.slicesOfBread));
     
     const handleSubmit = () => {
         const submitValidatedForm = () => {
           postForm();
         };
 
-        isFormValid && submitValidatedForm();
+        isFormValid(initialValues) && submitValidatedForm();
         setInputsValues(initialValues);
         setIsValidated(validatedValues);
     };
@@ -103,7 +94,7 @@ export const Form: React.FC = () => {
 
     return (
         <Container backgroundType={inputsValues.type}>
-            <InputsWrapper>
+            <FieldsWrapper>
                 <Header>Order your dish</Header>
                 <Label isCorrect={isValidated.name}>Name</Label>
                 <Input 
@@ -168,10 +159,14 @@ export const Form: React.FC = () => {
                     />
                 )}
                 <ButtonsWrapper>
-                    <SubmitButton onClick={handleSubmit} disabled={!isFormValid}>Submit</SubmitButton>
-                    <ClearButton onClick={clearForm}>Clear</ClearButton>
+                    <SubmitButton onClick={handleSubmit} disabled={!isFormValid(initialValues)}>
+                        Submit
+                    </SubmitButton>
+                    <ClearButton onClick={clearForm}>
+                        Clear
+                    </ClearButton>
                 </ButtonsWrapper>
-            </InputsWrapper>
+            </FieldsWrapper>
         </Container>
     );
 };

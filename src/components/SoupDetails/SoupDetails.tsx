@@ -1,19 +1,19 @@
-import React, { ChangeEvent, useState } from 'react';
-import { InputsValues, FormValidation } from '../../utils/types';
-import { spicinessScale } from './SoupDetails.types';
-import { Select, StyledOption, Label } from '../Form/Form.styles';
+import React, { useState } from 'react';
+import { InputEvent, InputsValues, FormValidation } from '../../utils/types';
+import { Label, Select, StyledOption } from '../Form/Form.styles';
+import { spicinessScale } from './SoupDetails.constants';
 
 interface SoupDetailsProps {
     inputsValues: InputsValues;
-    onInputChange: (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => void;
-    validateInput: (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => void;
+    onInputChange: (event: InputEvent) => void;
+    validateInput: (event: InputEvent) => void;
     isValid: FormValidation;
 }
 
 export const SoupDetails: React.FC<SoupDetailsProps> = ({ inputsValues, onInputChange, validateInput, isValid }) => {
     const [isSpicinessSelected, setIsSpicinessSelected] = useState<boolean>(false);
 
-    const selectSpiciness = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
+    const selectSpiciness = (event: InputEvent) => {
         onInputChange(event);
         setIsSpicinessSelected(true);
     }
