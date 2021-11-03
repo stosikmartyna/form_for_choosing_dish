@@ -18,7 +18,7 @@ export const initialValue = {
     slicesOfBread: undefined,
 }
 
-export interface IsUserValidated {
+export interface FormValidation {
     name?: boolean;
     preparationTime?: boolean;
     type?: boolean;
@@ -44,7 +44,7 @@ export enum DISH_TYPE {
     SANDWICH = 'sandwich',
 }
 
-export const types = [
+export const dishTypes = [
     { value: '', label: 'Dish type' },
     { value: 'pizza', label: 'Pizza' },
     { value: 'soup', label: 'Soup' },

@@ -6,10 +6,10 @@ import { SandwichDetails } from '../SandwichDetails/SandwichDetails';
 import { 
     initialValue, 
     InputValues, 
-    IsUserValidated, 
+    FormValidation, 
     validatedValues,
     DISH_TYPE,
-    types,
+    dishTypes,
 } from '../../utils/types';
 import {
     Container,
@@ -18,13 +18,13 @@ import {
     TimeInput,
     Select,
     StyledOption,
-    Button
+    SubmitButton,
+    ClearButton
 } from './Form.styles';
-import { format } from 'date-fns';
 
 export const Form: React.FC = () => {
     const [inputsValues, setInputsValues] = useState<InputValues>(initialValue);
-    const [isValidated, setIsValidated] = useState<IsUserValidated>(validatedValues);
+    const [isValidated, setIsValidated] = useState<FormValidation>(validatedValues);
 
     const postForm = async() => {
         try {
@@ -35,10 +35,36 @@ export const Form: React.FC = () => {
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
-        setInputsValues({
-            ...inputsValues,
-            [event.target.id]: event.target.value,
-        });
+        const {value, id} = event.target;
+        if (value === DISH_TYPE.PIZZA) {
+            setInputsValues({
+                ...inputsValues,
+                slicesOfBread: undefined,
+                spicinessScale: undefined,
+                [id]: value,
+            });
+        } else if (value === DISH_TYPE.SOUP) {
+            setInputsValues({
+                ...inputsValues,
+                noOfSlices: undefined,
+                diameter: undefined,
+                slicesOfBread: undefined,
+                [id]: value,
+            });
+        } else if (value === DISH_TYPE.SANDWICH) {
+            setInputsValues({
+                ...inputsValues,
+                spicinessScale: undefined,
+                noOfSlices: undefined,
+                diameter: undefined,
+                [id]: value,
+            });
+        } else {
+            setInputsValues({
+                ...inputsValues,
+                [id]: value,
+            });
+        }
     };
 
     const validateInput = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
@@ -47,9 +73,15 @@ export const Form: React.FC = () => {
       }
 
       const isFormValid =
-        inputsValues.name.trim() !== ''
-        && inputsValues.preparationTime.trim() !== ''
-        && inputsValues.type !== '';
+        !!inputsValues.name.trim()
+        && !!inputsValues.preparationTime
+        && !!inputsValues.type 
+        && ((inputsValues.type === DISH_TYPE.PIZZA 
+            && !!inputsValues.noOfSlices && !!inputsValues.diameter) 
+            || (inputsValues.type === DISH_TYPE.SOUP
+                && !!inputsValues.spicinessScale) 
+                || (inputsValues.type === DISH_TYPE.SANDWICH
+                    && !!inputsValues.slicesOfBread))
     
       const handleSubmit = () => {
         const submitValidatedForm = () => {
@@ -61,7 +93,10 @@ export const Form: React.FC = () => {
         setIsValidated(validatedValues);
     };
 
-    console.log(inputsValues)
+    const clearForm = () => {
+        setInputsValues(initialValue);
+        setIsValidated(validatedValues);
+    };
 
     return (
         <Container backgroundType={inputsValues.type}>
@@ -90,37 +125,50 @@ export const Form: React.FC = () => {
                     onBlur={validateInput}
                     isCorrect={isValidated.type}
                 >
-                    {types.map(type => {
+                    {dishTypes.map(dishType => {
                         return (
                             <StyledOption 
-                                disabled={type.label === 'Dish type'} 
-                                value={type.value} 
-                                key={type.value}
+                                disabled={dishType.label === 'Dish type'} 
+                                value={dishType.value} 
+                                key={dishType.value}
                             >
-                                {type.label}
+                                {dishType.label}
                             </StyledOption>
                         )
                     })}
                 </Select>
 
                 {inputsValues.type === DISH_TYPE.PIZZA && (
-                    <PizzaDetails inputsValues={inputsValues} onInputChange={handleInputChange} />
+                    <PizzaDetails 
+                        inputsValues={inputsValues} 
+                        onInputChange={handleInputChange}
+                        validateInput={validateInput}
+                        isValid={isValidated}
+                    />
                 )}
 
                 {inputsValues.type === DISH_TYPE.SOUP && (
                     <SoupDetails 
                         inputsValues={inputsValues} 
                         onInputChange={handleInputChange}
+                        validateInput={validateInput}
+                        isValid={isValidated}
                     />
                 )}
 
                 {inputsValues.type === DISH_TYPE.SANDWICH && (
-                    <SandwichDetails inputsValues={inputsValues} onInputChange={handleInputChange} />
+                    <SandwichDetails 
+                        inputsValues={inputsValues} 
+                        onInputChange={handleInputChange}
+                        validateInput={validateInput}
+                        isValid={isValidated}
+                    />
                 )}
 
-                <Button onClick={handleSubmit} disabled={!isFormValid}>
+                <SubmitButton onClick={handleSubmit} disabled={!isFormValid}>
                     Submit
-                </Button>
+                </SubmitButton>
+                <ClearButton onClick={clearForm}>Clear</ClearButton>
             </InputsWrapper>
         </Container>
     );

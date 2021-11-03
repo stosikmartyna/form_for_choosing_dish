@@ -127,7 +127,7 @@ export const StyledOption = styled.option`
     letter-spacing: 0.04em;
 `;
 
-export const Button = styled.button`
+export const SubmitButton = styled.button`
     align-items: center;
     background-color: ${colors.black};
     background-color: ${({disabled}) => disabled ? colors.inputGrey : colors.black};
@@ -141,4 +141,9 @@ export const Button = styled.button`
     padding: 12px 22px 12px 18px;
     text-align: left;
     width: 400px;
+`;
+
+export const ClearButton = styled(SubmitButton)`
+    background-color: ${colors.clearButtonGrey};
+    width: 200px;
 `;

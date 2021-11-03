@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { InputValues } from '../../utils/types';
+import { InputValues, FormValidation } from '../../utils/types';
 import { spicinessScale } from './SoupDetails.types';
 import { Select, StyledOption } from '../Form/Form.styles';
 
 interface SoupDetailsProps {
     inputsValues: InputValues;
     onInputChange: (event: any) => void;
+    validateInput: (event: any) => void;
+    isValid: FormValidation;
 }
 
-export const SoupDetails: React.FC<SoupDetailsProps> = ({ inputsValues, onInputChange }) => {
+export const SoupDetails: React.FC<SoupDetailsProps> = ({ inputsValues, onInputChange, validateInput, isValid }) => {
     const [isSpicinessSelected, setIsSpicinessSelected] = useState<boolean>(false);
 
     const selectSpiciness = (event: any) => {
@@ -22,6 +24,8 @@ export const SoupDetails: React.FC<SoupDetailsProps> = ({ inputsValues, onInputC
             placeholder={'Spiciness scale'}
             value={inputsValues.spicinessScale}
             onChange={selectSpiciness}
+            onBlur={validateInput}
+            isCorrect={isValid.spicinessScale}
         >
             {spicinessScale.map(spiciness => {
                 return (
