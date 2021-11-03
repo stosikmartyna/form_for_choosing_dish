@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/form_for_choosing_dish/static/css/main.a2e6ac63.chunk.css",
+    "main.js": "/form_for_choosing_dish/static/js/main.6e079291.chunk.js",
+    "main.js.map": "/form_for_choosing_dish/static/js/main.6e079291.chunk.js.map",
+    "runtime-main.js": "/form_for_choosing_dish/static/js/runtime-main.9ffbb7e0.js",
+    "runtime-main.js.map": "/form_for_choosing_dish/static/js/runtime-main.9ffbb7e0.js.map",
+    "static/js/2.c9e55439.chunk.js": "/form_for_choosing_dish/static/js/2.c9e55439.chunk.js",
+    "static/js/2.c9e55439.chunk.js.map": "/form_for_choosing_dish/static/js/2.c9e55439.chunk.js.map",
+    "index.html": "/form_for_choosing_dish/index.html",
+    "static/css/main.a2e6ac63.chunk.css.map": "/form_for_choosing_dish/static/css/main.a2e6ac63.chunk.css.map",
+    "static/js/2.c9e55439.chunk.js.LICENSE.txt": "/form_for_choosing_dish/static/js/2.c9e55439.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9ffbb7e0.js",
+    "static/js/2.c9e55439.chunk.js",
+    "static/css/main.a2e6ac63.chunk.css",
+    "static/js/main.6e079291.chunk.js"
+  ]
+}
